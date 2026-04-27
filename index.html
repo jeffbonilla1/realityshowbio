@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeff Bonilla — Reality TV Creator</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --dark: #111111;
+  --surface: #1a1a1a;
+  --gold: #c8972a;
+  --gold-light: #e8b84b;
+  --cream: #f5f0e8;
+  --muted: #888880;
+  --white: #f8f5ee;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Playfair Display', Georgia, serif;
+  overflow-x: hidden;
+}
+
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 60% 80% at 70% 50%, rgba(200,151,42,0.08), transparent),
+    radial-gradient(ellipse 40% 60% at 20% 80%, rgba(200,151,42,0.05), transparent);
+  pointer-events: none;
+}
+
+.hero-photo {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(20%) contrast(1.05);
+  display: block;
+}
+
+.hero-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 60%, var(--black) 100%),
+              linear-gradient(180deg, transparent 70%, var(--black) 100%);
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 60px 80px 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp .8s .2s forwards;
+}
+
+.hero-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 7vw, 96px);
+  line-height: .95;
+  letter-spacing: .02em;
+  color: var(--white);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp .8s .4s forwards;
+}
+
+.hero-name span { color: var(--gold); display: block; }
+
+.hero-tagline {
+  font-size: 18px;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 380px;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeUp .8s .6s forwards;
+}
+
+.hero-credits {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp .8s .8s forwards;
+}
+
+.credit-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: .05em;
+}
+
+.credit-item::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.credit-item strong { color: var(--white); }
+
+.hero-cta { opacity: 0; animation: fadeUp .8s 1s forwards; }
+
+.btn-gold {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--black);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 16px 32px;
+  transition: background .2s, transform .2s;
+}
+
+.btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 60px;
+  margin: 60px 0 0;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+.divider-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.bio {
+  padding: 80px 60px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.bio-text { font-size: 19px; line-height: 1.75; color: #ccc8c0; }
+.bio-text p + p { margin-top: 20px; }
+.bio-text strong { color: var(--white); font-weight: 700; }
+
+.shows { padding: 0 40px 100px; max-width: 1200px; margin: 0 auto; }
+
+.shows-header { text-align: center; margin-bottom: 60px; padding: 0 20px; }
+
+.shows-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 6vw, 72px);
+  letter-spacing: .04em;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+
+.shows-sub { font-style: italic; color: var(--muted); font-size: 17px; }
+
+.show-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-bottom: 4px;
+  background: var(--surface);
+  border: 1px solid #222;
+  overflow: hidden;
+  transition: border-color .3s;
+}
+
+.show-card:hover { border-color: var(--gold); }
+
+.show-card.reverse { direction: rtl; }
+.show-card.reverse > * { direction: ltr; }
+
+.show-visual {
+  background: var(--dark);
+  min-height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.show-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 180px;
+  color: rgba(200,151,42,0.06);
+  position: absolute;
+  line-height: 1;
+  user-select: none;
+}
+
+.show-icon { font-size: 72px; position: relative; z-index: 2; }
+
+.show-info {
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.show-genre {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.show-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(36px, 4vw, 52px);
+  letter-spacing: .04em;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.show-logline {
+  font-size: 17px;
+  font-style: italic;
+  color: var(--gold-light);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.show-desc {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.show-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(200,151,42,0.3);
+  padding: 5px 10px;
+}
+
+.show-status {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  background: rgba(200,151,42,0.15);
+  color: var(--gold);
+  padding: 6px 12px;
+  margin-top: 16px;
+  align-self: flex-start;
+}
+
+.productions {
+  background: var(--surface);
+  padding: 80px 60px;
+  text-align: center;
+  border-top: 1px solid #222;
+  border-bottom: 1px solid #222;
+}
+
+.productions-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 40px;
+}
+
+.productions-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 40px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.production-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: .08em;
+  color: #555;
+  transition: color .2s;
+  cursor: default;
+}
+
+.production-name:hover { color: var(--gold); }
+
+.contact {
+  padding: 100px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(200,151,42,0.06), transparent);
+  pointer-events: none;
+}
+
+.contact-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 7vw, 88px);
+  letter-spacing: .04em;
+  color: var(--white);
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.contact-sub {
+  font-style: italic;
+  color: var(--muted);
+  font-size: 18px;
+  margin-bottom: 48px;
+  position: relative;
+}
+
+.contact-email {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 18px;
+  color: var(--gold);
+  text-decoration: none;
+  letter-spacing: .05em;
+  border-bottom: 1px solid rgba(200,151,42,0.3);
+  padding-bottom: 4px;
+  transition: color .2s, border-color .2s;
+  position: relative;
+}
+
+.contact-email:hover { color: var(--gold-light); border-color: var(--gold-light); }
+
+.contact-note {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: #444;
+  margin-top: 60px;
+  text-transform: uppercase;
+}
+
+footer {
+  padding: 24px 60px;
+  border-top: 1px solid #1a1a1a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer p {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: #333;
+  letter-spacing: .05em;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-photo { height: 50vh; }
+  .hero-photo::after { background: linear-gradient(180deg, transparent 50%, var(--black) 100%); }
+  .hero-content { padding: 40px 24px 60px; }
+  .show-card, .show-card.reverse { grid-template-columns: 1fr; direction: ltr; }
+  .show-visual { min-height: 200px; }
+  .show-info { padding: 32px 24px; }
+  .bio, .shows, .productions, .contact { padding-left: 24px; padding-right: 24px; }
+  footer { flex-direction: column; gap: 8px; text-align: center; padding: 24px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-photo">
+    <img src="jeff_headshot.jpg" alt="Jeff Bonilla">
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Reality TV Creator · Writer · Producer</div>
+    <h1 class="hero-name">
+      Jeff
+      <span>Bonilla</span>
+    </h1>
+    <p class="hero-tagline">Ideas that stop the scroll, start the conversation, and survive the room.</p>
+    <div class="hero-credits">
+      <div class="credit-item"><strong>6</strong> optioned unscripted series</div>
+      <div class="credit-item"><strong>Ryan Seacrest Productions</strong> · Jamie Kennedy Entertainment</div>
+      <div class="credit-item"><strong>Merv Griffin</strong> · 3 Ball · Bunim-Murray</div>
+      <div class="credit-item">Retired LEO · Published Author · BMI Songwriter</div>
+    </div>
+    <div class="hero-cta">
+      <a href="mailto:efiproducers@yahoo.com" class="btn-gold">Get In Touch</a>
+    </div>
+  </div>
+</section>
+
+<section class="bio">
+  <div class="section-label">About</div>
+  <div class="bio-text">
+    <p>Jeff Bonilla is a <strong>retired law enforcement officer, published author, and produced songwriter</strong> who creates unscripted television that get optioned. He knows the difference between a concept that sounds good in a room and one that actually works on screen.</p>
+    <p>His series have been acquired by <strong>Ryan Seacrest Productions, Jamie Kennedy Entertainment, Merv Griffin Productions, 3 Ball Productions, Bunim-Murray, and Nitelite Productions</strong>.</p>
+    <p>He is currently developing a new slate of concepts built for the <strong>streaming era</strong> — emotionally resonant, visually distinctive, and commercially viable.</p>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-text">Current Slate</div>
+  <div class="divider-line" style="background: linear-gradient(90deg, transparent, var(--gold));"></div>
+</div>
+
+<section class="shows">
+  <div class="shows-header">
+    <h2 class="shows-title">The Concepts</h2>
+    <p class="shows-sub">Three ideas. All available. All registered.</p>
+  </div>
+
+  <div class="show-card">
+    <div class="show-visual">
+      <div class="show-number">01</div>
+      <div class="show-icon">💣</div>
+    </div>
+    <div class="show-info">
+      <div class="show-genre">Game Show · Studio · All Ages</div>
+      <h3 class="show-title">Debtonator</h3>
+      <p class="show-logline">"What if instead of winning money... you destroyed your debt?"</p>
+      <p class="show-desc">Solo contestants or families compete in seven rounds of increasingly difficult, debt-themed physical and mental challenges. Win all seven and push the Debtonator handle down — obliterating their debt in a spectacular explosion of confetti and shredded bills. $50,000 in debt elimination. Real people. Real stakes. Real catharsis.</p>
+      <div class="show-tags">
+        <span class="tag">Studio Game Show</span>
+        <span class="tag">Debt / Economy</span>
+        <span class="tag">Family Friendly</span>
+        <span class="tag">Streaming Ready</span>
+      </div>
+      <span class="show-status">● Sizzle In Development</span>
+    </div>
+  </div>
+
+  <div class="show-card reverse">
+    <div class="show-visual">
+      <div class="show-number">02</div>
+      <div class="show-icon">🏔️</div>
+    </div>
+    <div class="show-info">
+      <div class="show-genre">Competition · Outdoor · Physical + Strategy</div>
+      <h3 class="show-title">Money Mountain</h3>
+      <p class="show-logline">"Six teams. Locked backpacks. One contains $100,000. Only one team will find out."</p>
+      <p class="show-desc">Teams of two race up a mountain through grueling obstacle courses while carrying padlocked backpacks — only one of which contains cold hard cash. Runners tackle the course. Gunners man water cannons to slow opponents. The original format that proved the market.</p>
+      <div class="show-tags">
+        <span class="tag">Outdoor Competition</span>
+        <span class="tag">Physical + Strategy</span>
+        <span class="tag">International Format</span>
+        <span class="tag">Proven Market</span>
+      </div>
+      <span class="show-status">● Sizzle Reel Available</span>
+    </div>
+  </div>
+
+  <div class="show-card">
+    <div class="show-visual">
+      <div class="show-number">03</div>
+      <div class="show-icon">🎸</div>
+    </div>
+    <div class="show-info">
+      <div class="show-genre">Music Competition · Studio · Ages 18–49</div>
+      <h3 class="show-title">BandWarp</h3>
+      <p class="show-logline">"Spin the wheel. Enter the door. Become a completely different band."</p>
+      <p class="show-desc">Unknown bands compete for a record contract — but there's a catch. They spin a wheel that sends them through a door into a completely different musical era. The death metal band that has to write doo-wop. The boy band forced to play the blues. Every episode is a different world.</p>
+      <div class="show-tags">
+        <span class="tag">Music Competition</span>
+        <span class="tag">Comedy + Drama</span>
+        <span class="tag">18–49 Demo</span>
+        <span class="tag">High Viral Potential</span>
+      </div>
+      <span class="show-status">● In Development</span>
+    </div>
+  </div>
+
+</section>
+
+<div class="productions">
+  <div class="productions-title">Series Acquired By</div>
+  <div class="productions-grid">
+    <span class="production-name">Ryan Seacrest Productions</span>
+    <span class="production-name">Jamie Kennedy Entertainment</span>
+    <span class="production-name">Merv Griffin Productions</span>
+    <span class="production-name">3 Ball Productions</span>
+    <span class="production-name">Bunim-Murray Productions</span>
+    <span class="production-name">Nitelite Productions</span>
+    <span class="production-name">Citizen Skull</span>
+  </div>
+</div>
+
+<section class="contact">
+  <h2 class="contact-title">Let's Talk.</h2>
+  <p class="contact-sub">Additional concepts available upon request.</p>
+  <a href="mailto:efiproducers@yahoo.com" class="contact-email">efiproducers@yahoo.com</a>
+  <p class="contact-note">All concepts registered. All rights reserved.</p>
+</section>
+
+<footer>
+  <p>© 2026 Jeff Bonilla. All concepts registered.</p>
+  <p>efiproducers@yahoo.com</p>
+</footer>
+
+</body>
+</html>
